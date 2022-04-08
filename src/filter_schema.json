@@ -11,5 +11,6 @@
       "value": "search1"
     },
 
-    { "key": "density", "type": "range", "value": "search2" }
+    { "key": "density", "type": "range", "value": "search2" },
+    {"key":"name","type":"starts_with","value":"search3"}
   ]

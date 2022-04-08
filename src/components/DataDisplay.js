@@ -2,7 +2,12 @@ import Map from "./Map";
 import SideBar from "./SideBar";
 import { filter } from "./utils";
 
-const DataDisplay = ({ filter_schema, uncontrolled_filters, data }) => {
+const DataDisplay = ({
+  filter_schema,
+  uncontrolled_filters,
+  data,
+  controlled_filters,
+}) => {
   const filterData = () => {
     if (data !== null) {
       let filtered_data = data;
@@ -11,7 +16,9 @@ const DataDisplay = ({ filter_schema, uncontrolled_filters, data }) => {
           data: filtered_data,
           schema: {
             ...schema,
-            value: uncontrolled_filters[schema.value],
+            value:
+              controlled_filters[schema.value] ||
+              uncontrolled_filters[schema.value],
           },
         });
       }

@@ -12,7 +12,7 @@ function App() {
   const [form_schema, setFormSchema] = useState([]);
   const [filter_schema, setFilterSchema] = useState([]);
   const [uncontrolled_filters, setUncontrolledFilters] = useState({});
-
+  const [controlled_filters, setControlledFilters] = useState({});
   const [data, setData] = useState();
 
   //fetch data here
@@ -29,11 +29,14 @@ function App() {
           <DataDisplay
             filter_schema={filter_schema}
             uncontrolled_filters={uncontrolled_filters}
+            controlled_filters={controlled_filters}
             data={data}
           />
           <Filters
             form_schema={form_schema}
             setUncontrolledFilters={setUncontrolledFilters}
+            setControlledFilters={setControlledFilters}
+            controlled_filters={controlled_filters}
           />
         </div>
       )}
