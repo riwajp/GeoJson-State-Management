@@ -11,7 +11,9 @@ const DataDisplay = ({
   const filterData = () => {
     if (data !== null) {
       let filtered_data = data;
-      for (const schema of filter_schema) {
+      for (const schema of filter_schema.filter(
+        (schema) => !schema.controlled
+      )) {
         filtered_data = filter({
           data: filtered_data,
           schema: {
