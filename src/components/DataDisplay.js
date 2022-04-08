@@ -1,23 +1,34 @@
-import { useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import data from "../data.json";
-import { filtered_states_state, states_state } from "../states";
 import Map from "./Map";
 import SideBar from "./SideBar";
+import { filter } from "./utils";
 
-const DataDisplay = () => {
-  const [states, setStates] = useRecoilState(states_state);
-  const filtered_states = useRecoilValue(filtered_states_state);
+const DataDisplay = ({ filter_schema, uncontrolled_filters, data }) => {
+  const filterData = () => {
+    if (data !== null) {
+      let filtered_data = data;
+      for (const schema of filter_schema) {
+        filtered_data = filter({
+          data: filtered_data,
+          schema: {
+            ...schema,
+            value: uncontrolled_filters[schema.value],
+          },
+        });
+      }
+
+      return filtered_data;
+    } else {
+      return null;
+    }
+  };
+
+  const filtered_data = filterData();
   console.log("DataDisplay");
 
-  //fetch data for first time
-  useEffect(() => {
-    setStates(data.features);
-  }, []);
   return (
     <div>
       {" "}
-      <SideBar states={filtered_states} /> <Map states={filtered_states} />
+      <SideBar data={filtered_data} /> <Map data={filtered_data} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-const SideBar = ({ states }) => {
+const SideBar = ({ data }) => {
   console.log("SideBar");
 
   return (
@@ -7,10 +7,10 @@ const SideBar = ({ states }) => {
       <br />
       <br />
       <div>
-        {states !== null &&
-          states.map((state) => (
-            <div key={state.properties.name}>
-              {state.properties.name}=== {state.properties.density}
+        {data &&
+          data.map((d) => (
+            <div key={d.properties.name}>
+              {d.properties.name}=== {d.properties.density}
             </div>
           ))}
       </div>

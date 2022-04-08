@@ -1,14 +1,8 @@
 import { useForm, Controller, get } from "react-hook-form";
-import { uncontrolled_filters_state, form_schema_state } from "../states";
-import { useRecoilState } from "recoil";
+
 import FilterInput from "./FilterInput";
 
-const Filter = () => {
-  const [uncontrolled_filters, setUncontrolledFilters] = useRecoilState(
-    uncontrolled_filters_state
-  );
-  const [form_schema, setFormSchema] = useRecoilState(form_schema_state);
-
+const Filter = ({ form_schema, setUncontrolledFilters }) => {
   const default_values = {};
   for (const schema of form_schema) {
     default_values[schema.name] = schema.default;

@@ -1,0 +1,22 @@
+[
+    {
+      "name": "search",
+      "type": "text",
+      "default": "",
+      "placeholder": "Starts with..."
+    },
+    { "name": "search1", "type": "text", "default": "", "placeholder": "Ends With..." },
+    {
+      "name": "search2",
+      "type": "select",
+      "placeholder": "Density",
+      "label": "Density",
+      "options": [
+        { "label": ">0", "value": [0, 300] },
+        { "label": "0-50", "value": [1, 50] },
+        { "label": "51-100", "value": [51, 100] },
+        { "label": "101-150", "value": [101, 150] },
+        { "label": "Others(>150)", "value": [151, 300] }
+      ]
+    }
+  ]

@@ -1,0 +1,15 @@
+[
+    {
+      "key": "name",
+      "type": "starts_with",
+      "value": "search"
+    },
+
+    {
+      "key": "name",
+      "type": "ends_with",
+      "value": "search1"
+    },
+
+    { "key": "density", "type": "range", "value": "search2" }
+  ]

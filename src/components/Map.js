@@ -1,4 +1,4 @@
-const Map = ({ states }) => {
+const Map = ({ data }) => {
   console.log("Map");
 
   return (
@@ -6,7 +6,7 @@ const Map = ({ states }) => {
       <div>Map</div>
       <br />
       <br />
-      {states !== null ? states.length : 0} states match the filters.
+      {data ? data.length : 0} data match the filters.
     </div>
   );
 };
