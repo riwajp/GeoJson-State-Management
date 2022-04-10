@@ -23,7 +23,7 @@ const FilterInput = forwardRef(
             [name]: e.target.value,
           });
         },
-        value: controlled_filters[name],
+        value: controlled_filters[name] || "",
       };
     }
     switch (type) {

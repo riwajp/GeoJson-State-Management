@@ -1,12 +1,27 @@
-const Map = ({ data }) => {
+import { useContext } from "react";
+
+import { DataContext } from "./DataDisplay";
+const Map = ({}) => {
+  const { data, selected_data } = useContext(DataContext);
   console.log("Map");
 
   return (
     <div className="map">
-      <div>Map</div>
+      <h3>Map</h3>
       <br />
       <br />
-      {data ? data.length : 0} data match the filters.
+      <div className="map-container">
+        {data.map((d) => (
+          <div
+            key={d.properties.name}
+            className={`map-item ${
+              selected_data === d.properties.name ? "map-item-selected" : ""
+            }`}
+          >
+            {d.properties.density}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

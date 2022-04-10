@@ -1,13 +1,18 @@
 import Map from "./Map";
 import SideBar from "./SideBar";
 import { filter } from "./utils";
+import { useContext, createContext } from "react";
+import { AppContext } from "../App";
+import { useState } from "react";
 
-const DataDisplay = ({
-  filter_schema,
-  uncontrolled_filters,
-  data,
-  controlled_filters,
-}) => {
+export const DataContext = createContext();
+
+const DataDisplay = ({}) => {
+  const { filter_schema, uncontrolled_filters, data, controlled_filters } =
+    useContext(AppContext);
+
+  const [selected_data, setSelectedData] = useState();
+
   const filterData = () => {
     if (data !== null) {
       let filtered_data = data;
@@ -35,10 +40,12 @@ const DataDisplay = ({
   console.log("DataDisplay");
 
   return (
-    <div>
+    <DataContext.Provider
+      value={{ data: filtered_data, selected_data, setSelectedData }}
+    >
       {" "}
-      <SideBar data={filtered_data} /> <Map data={filtered_data} />
-    </div>
+      <SideBar /> <Map />
+    </DataContext.Provider>
   );
 };
 

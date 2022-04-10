@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import form_schema_data from "./form_schema.json";
 import filter_schema_data from "./filter_schema.json";
 import geojson_data from "./data.json";
+import { createContext } from "react";
+
+export const AppContext = createContext();
 
 function App() {
   console.log("App");
@@ -23,24 +26,36 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      {data && (
-        <div>
-          <DataDisplay
-            filter_schema={filter_schema}
-            uncontrolled_filters={uncontrolled_filters}
-            controlled_filters={controlled_filters}
-            data={data}
-          />
-          <Filters
-            form_schema={form_schema}
-            setUncontrolledFilters={setUncontrolledFilters}
-            setControlledFilters={setControlledFilters}
-            controlled_filters={controlled_filters}
-          />
-        </div>
-      )}
-    </div>
+    <AppContext.Provider
+      value={{
+        filter_schema,
+        uncontrolled_filters,
+        controlled_filters,
+        data,
+        setControlledFilters,
+        setUncontrolledFilters,
+        form_schema,
+      }}
+    >
+      <div className="App">
+        {data && (
+          <div>
+            <DataDisplay
+              filter_schema={filter_schema}
+              uncontrolled_filters={uncontrolled_filters}
+              controlled_filters={controlled_filters}
+              data={data}
+            />
+            <Filters
+              form_schema={form_schema}
+              setUncontrolledFilters={setUncontrolledFilters}
+              setControlledFilters={setControlledFilters}
+              controlled_filters={controlled_filters}
+            />
+          </div>
+        )}
+      </div>
+    </AppContext.Provider>
   );
 }
 

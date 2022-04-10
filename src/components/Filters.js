@@ -1,13 +1,17 @@
 import { useForm, Controller } from "react-hook-form";
 
 import FilterInput from "./FilterInput";
+import { useContext } from "react";
+import { AppContext } from "../App";
 
-const Filter = ({
-  form_schema,
-  setUncontrolledFilters,
-  setControlledFilters,
-  controlled_filters,
-}) => {
+const Filter = ({}) => {
+  const {
+    form_schema,
+    setUncontrolledFilters,
+    setControlledFilters,
+    controlled_filters,
+  } = useContext(AppContext);
+
   const default_values = {};
   for (const schema of form_schema) {
     default_values[schema.name] = schema.default;
@@ -18,7 +22,7 @@ const Filter = ({
 
   return (
     <div className="filters">
-      <div>Filter</div>
+      <h3>Filter</h3>
 
       {form_schema.map((schema) =>
         !schema.controlled ? (

@@ -1,17 +1,25 @@
-const SideBar = ({ data }) => {
+import { useContext } from "react";
+
+import { DataContext } from "./DataDisplay";
+import SideBarItem from "./SideBarItem";
+
+const SideBar = () => {
+  const { data } = useContext(DataContext);
+
   console.log("SideBar");
 
   return (
     <div className="sidebar">
-      <div>SideBar</div>
+      <h3>SideBar</h3>
       <br />
       <br />
       <div>
         {data &&
           data.map((d) => (
-            <div key={d.properties.name}>
-              {d.properties.name}=== {d.properties.density}
-            </div>
+            <SideBarItem
+              key={d.properties.name}
+              state_name={d.properties.name}
+            />
           ))}
       </div>
     </div>
