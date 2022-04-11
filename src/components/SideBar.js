@@ -4,7 +4,7 @@ import { DataContext } from "./DataDisplay";
 import SideBarItem from "./SideBarItem";
 
 const SideBar = () => {
-  const { data } = useContext(DataContext);
+  const { data, lastElementRef } = useContext(DataContext);
 
   console.log("SideBar");
 
@@ -15,10 +15,11 @@ const SideBar = () => {
       <br />
       <div>
         {data &&
-          data.map((d) => (
+          data.map((d, index) => (
             <SideBarItem
               key={d.properties.name}
               state_name={d.properties.name}
+              index={index}
             />
           ))}
       </div>
