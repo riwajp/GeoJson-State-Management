@@ -1,9 +1,8 @@
 import { useContext } from "react";
 
 import { DataContext } from "./DataDisplay";
-const SideBarItem = ({ state_name, index }) => {
-  const { setSelectedData, selected_data, data, last_element_ref } =
-    useContext(DataContext);
+const SideBarItem = ({ state_name, index, last_element_ref }) => {
+  const { setSelectedData, selected_data, data } = useContext(DataContext);
 
   if (index === data.length - 1) {
     return (

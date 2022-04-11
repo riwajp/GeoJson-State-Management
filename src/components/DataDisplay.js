@@ -9,6 +9,7 @@ import {
   useCallback,
 } from "react";
 import { AppContext } from "../App";
+import SideBarItem from "./SideBarItem";
 
 export const DataContext = createContext();
 
@@ -23,23 +24,6 @@ const DataDisplay = ({}) => {
   } = useContext(AppContext);
 
   const [selected_data, setSelectedData] = useState();
-
-  const observer = useRef();
-
-  const last_element_ref = useCallback(
-    (item) => {
-      if (observer.current) observer.current.disconnect();
-
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && has_more) {
-          setPage((previous_page) => previous_page + 1);
-        }
-      });
-
-      if (item) observer.current.observe(item);
-    },
-    [data, has_more, controlled_filters, uncontrolled_filters]
-  );
 
   const filterData = () => {
     if (data !== null) {
@@ -73,11 +57,13 @@ const DataDisplay = ({}) => {
         data: filtered_data,
         selected_data,
         setSelectedData,
-        last_element_ref,
+
+        setPage,
+        has_more,
       }}
     >
       {" "}
-      <SideBar /> <Map />
+      <SideBar Item={SideBarItem} /> <Map />
     </DataContext.Provider>
   );
 };
