@@ -1,35 +1,24 @@
 import { useContext } from "react";
-
 import { DataContext } from "./DataDisplay";
-const SideBarItem = ({ state_name, index, last_element_ref }) => {
-  const { setSelectedData, selected_data, data } = useContext(DataContext);
+import { SideBarContext } from "./SideBar";
+const SideBarItem = ({ index, children }) => {
+  const { setSelectedData, selected_data, filtered_data } =
+    useContext(DataContext);
 
-  if (index === data.length - 1) {
-    return (
-      <div
-        ref={last_element_ref}
-        className={
-          "sidebar-item" +
-          (selected_data === state_name ? " sidebar-item-selected" : "")
-        }
-        onClick={() => setSelectedData(state_name)}
-      >
-        {state_name}
-      </div>
-    );
-  } else {
-    return (
-      <div
-        className={
-          "sidebar-item" +
-          (selected_data === state_name ? " sidebar-item-selected" : "")
-        }
-        onClick={() => setSelectedData(state_name)}
-      >
-        {state_name}
-      </div>
-    );
-  }
+  const { last_element_ref } = useContext(SideBarContext);
+
+  return (
+    <div
+      ref={index === filtered_data.length - 1 ? last_element_ref : null}
+      onClick={() => setSelectedData(filtered_data[index].properties)}
+    >
+      {children.filter(
+        (child) =>
+          child.props.selected ===
+          (selected_data === filtered_data[index].properties)
+      )}
+    </div>
+  );
 };
 
 export default SideBarItem;

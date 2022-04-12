@@ -1,12 +1,10 @@
-import { useContext } from "react";
-
-import { DataContext } from "./DataDisplay";
+import { useContext, createContext } from "react";
 import { useRef, useCallback } from "react";
+import { AppContext } from "../App";
 
-const SideBar = ({ Item }) => {
-  const { data, setPage, has_more } = useContext(DataContext);
-
-  console.log("SideBar");
+export const SideBarContext = createContext();
+const SideBar = ({ children }) => {
+  const { data, filtered_data, setPage, has_more } = useContext(AppContext);
 
   const observer = useRef();
   const last_element_ref = useCallback(
@@ -21,26 +19,18 @@ const SideBar = ({ Item }) => {
 
       if (item) observer.current.observe(item);
     },
-    [data, has_more]
+    [filtered_data, has_more]
   );
 
   return (
-    <div className="sidebar">
-      <h3>SideBar</h3>
-      <br />
-      <br />
-      <div>
-        {data &&
-          data.map((d, index) => (
-            <Item
-              key={d.properties.name}
-              state_name={d.properties.name}
-              index={index}
-              last_element_ref={last_element_ref}
-            />
-          ))}
+    <SideBarContext.Provider value={{ last_element_ref }}>
+      <div className="sidebar">
+        <h3>SideBar</h3>
+        <br />
+        <br />
+        <div>{children}</div>
       </div>
-    </div>
+    </SideBarContext.Provider>
   );
 };
 

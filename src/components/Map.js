@@ -1,9 +1,9 @@
 import { useContext } from "react";
-
+import { AppContext } from "../App";
 import { DataContext } from "./DataDisplay";
 const Map = ({}) => {
-  const { data, selected_data } = useContext(DataContext);
-  console.log("Map");
+  const { selected_data } = useContext(DataContext);
+  const { filtered_data } = useContext(AppContext);
 
   return (
     <div className="map">
@@ -11,11 +11,11 @@ const Map = ({}) => {
       <br />
       <br />
       <div className="map-container">
-        {data.map((d) => (
+        {filtered_data.map((d) => (
           <div
             key={d.properties.name}
             className={`map-item ${
-              selected_data === d.properties.name ? "map-item-selected" : ""
+              selected_data === d.properties ? "map-item-selected" : ""
             }`}
           >
             {d.properties.density}
