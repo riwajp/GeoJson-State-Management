@@ -51,12 +51,13 @@ function App() {
             renderSideBar={(selected_data, items) => (
               <SideBar
                 items={items}
-                itemsRender={(item, index) => (
+                selected_data={selected_data}
+                itemsRender={(item, index, selected) => (
                   <SideBarItem
                     key={item.properties.name}
                     index={index}
                     render={() =>
-                      selected_data === item.properties ? (
+                      selected ? (
                         <div className="sidebar-item sidebar-item-selected">
                           This is {item?.properties.name}. (selected)
                         </div>

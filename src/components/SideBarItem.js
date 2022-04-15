@@ -2,8 +2,7 @@ import { useContext } from "react";
 import { DataContext } from "./DataDisplay";
 import { SideBarContext } from "./SideBar";
 const SideBarItem = ({ index, render }) => {
-  const { setSelectedData, selected_data, filtered_data } =
-    useContext(DataContext);
+  const { setSelectedData, filtered_data } = useContext(DataContext);
   const { last_element_ref } = useContext(SideBarContext);
 
   return (
