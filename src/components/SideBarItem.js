@@ -1,17 +1,14 @@
 import { useContext } from "react";
 import { DataContext } from "./DataDisplay";
-import { SideBarContext } from "./SideBar";
-const SideBarItem = ({ index, render }) => {
-  const { setSelectedData, selected_data, filtered_data } =
-    useContext(DataContext);
-  const { last_element_ref } = useContext(SideBarContext);
+const SideBarItem = ({ index, element_ref, children }) => {
+  const { setSelectedData, filtered_data } = useContext(DataContext);
 
   return (
     <div
-      ref={index === filtered_data.length - 1 ? last_element_ref : null}
+      ref={element_ref}
       onClick={() => setSelectedData(filtered_data[index].properties)}
     >
-      {render(selected_data === filtered_data[index].properties)}
+      {children}
     </div>
   );
 };

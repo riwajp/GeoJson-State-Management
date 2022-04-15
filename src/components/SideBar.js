@@ -1,11 +1,15 @@
-import { useContext, createContext } from "react";
 import { useRef, useCallback } from "react";
-import { AppContext } from "../App";
 
-export const SideBarContext = createContext();
-const SideBar = ({ items, itemsRender, children }) => {
-  const { setPage, has_more } = useContext(AppContext);
-
+const SideBar = ({
+  items,
+  itemsRender,
+  children,
+  setPage,
+  has_more,
+  setSelectedData,
+  selected_data,
+}) => {
+  //refs
   const observer = useRef();
   const last_element_ref = useCallback(
     (item) => {
@@ -22,13 +26,25 @@ const SideBar = ({ items, itemsRender, children }) => {
     [items, has_more]
   );
 
+  //return
   return (
-    <SideBarContext.Provider value={{ last_element_ref }}>
+    <div>
       <div className="sidebar">
         <div>{children}</div>
-        <div> {items.map((item, index) => itemsRender(item, index))}</div>
+        <div>
+          {items?.map((item, index) => (
+            <div
+              key={item.properties.name}
+              index={index}
+              ref={index === items.length - 1 ? last_element_ref : null}
+              onClick={() => setSelectedData(item.properties)}
+            >
+              {itemsRender(item, item.properties === selected_data)}
+            </div>
+          ))}
+        </div>
       </div>
-    </SideBarContext.Provider>
+    </div>
   );
 };
 

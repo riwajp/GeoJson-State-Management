@@ -6,9 +6,7 @@ import { useState, useEffect, createContext } from "react";
 import form_schema_data from "./form_schema.json";
 import filter_schema_data from "./filter_schema.json";
 import geojson_data from "./data.json";
-import Map from "./components/Map";
-import SideBar from "./components/SideBar";
-import SideBarItem from "./components/SideBarItem";
+
 import { filter } from "./components/utils";
 
 export const AppContext = createContext();
@@ -94,32 +92,8 @@ function App() {
     >
       <div className="App">
         <div>
-          <DataDisplay>
-            <SideBar
-              items={filtered_data}
-              itemsRender={(item, index) => (
-                <SideBarItem
-                  key={item.properties.name}
-                  index={index}
-                  render={(selected_data) =>
-                    selected_data ? (
-                      <div className="sidebar-item sidebar-item-selected">
-                        This is {item?.properties.name}. (selected)
-                      </div>
-                    ) : (
-                      <div className="sidebar-item">
-                        This is {item.properties.name}.
-                      </div>
-                    )
-                  }
-                />
-              )}
-            >
-              This is SideBar
-            </SideBar>
+          <DataDisplay />
 
-            <Map />
-          </DataDisplay>
           <Filters />
         </div>
       </div>
