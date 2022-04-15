@@ -96,18 +96,23 @@ function App() {
         <div>
           <DataDisplay>
             <SideBar>
+              This is Sidebar.
               {filtered_data.map((d, index) => (
-                <SideBarItem key={d.properties.name} index={index}>
-                  <div className="sidebar-item" selected={false}>
-                    This is {d.properties.name}.
-                  </div>
-                  <div
-                    className="sidebar-item sidebar-item-selected"
-                    selected={true}
-                  >
-                    This is {d.properties.name}.
-                  </div>
-                </SideBarItem>
+                <SideBarItem
+                  key={d.properties.name}
+                  index={index}
+                  render={(selected_data) =>
+                    selected_data ? (
+                      <div className="sidebar-item sidebar-item-selected">
+                        This is {d.properties.name}. (selected)
+                      </div>
+                    ) : (
+                      <div className="sidebar-item">
+                        This is {d.properties.name}.
+                      </div>
+                    )
+                  }
+                />
               ))}
             </SideBar>
 

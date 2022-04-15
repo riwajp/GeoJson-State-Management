@@ -25,9 +25,6 @@ const SideBar = ({ children }) => {
   return (
     <SideBarContext.Provider value={{ last_element_ref }}>
       <div className="sidebar">
-        <h3>SideBar</h3>
-        <br />
-        <br />
         <div>{children}</div>
       </div>
     </SideBarContext.Provider>
