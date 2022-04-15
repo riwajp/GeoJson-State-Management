@@ -3,8 +3,8 @@ import { useRef, useCallback } from "react";
 import { AppContext } from "../App";
 
 export const SideBarContext = createContext();
-const SideBar = ({ children }) => {
-  const { data, filtered_data, setPage, has_more } = useContext(AppContext);
+const SideBar = ({ items, itemsRender, children }) => {
+  const { setPage, has_more } = useContext(AppContext);
 
   const observer = useRef();
   const last_element_ref = useCallback(
@@ -19,13 +19,14 @@ const SideBar = ({ children }) => {
 
       if (item) observer.current.observe(item);
     },
-    [filtered_data, has_more]
+    [items, has_more]
   );
 
   return (
     <SideBarContext.Provider value={{ last_element_ref }}>
       <div className="sidebar">
         <div>{children}</div>
+        <div> {items.map((item, index) => itemsRender(item, index))}</div>
       </div>
     </SideBarContext.Provider>
   );

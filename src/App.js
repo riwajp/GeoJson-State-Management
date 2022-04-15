@@ -95,25 +95,27 @@ function App() {
       <div className="App">
         <div>
           <DataDisplay>
-            <SideBar>
-              This is Sidebar.
-              {filtered_data.map((d, index) => (
+            <SideBar
+              items={filtered_data}
+              itemsRender={(item, index) => (
                 <SideBarItem
-                  key={d.properties.name}
+                  key={item.properties.name}
                   index={index}
                   render={(selected_data) =>
                     selected_data ? (
                       <div className="sidebar-item sidebar-item-selected">
-                        This is {d.properties.name}. (selected)
+                        This is {item?.properties.name}. (selected)
                       </div>
                     ) : (
                       <div className="sidebar-item">
-                        This is {d.properties.name}.
+                        This is {item.properties.name}.
                       </div>
                     )
                   }
                 />
-              ))}
+              )}
+            >
+              This is SideBar
             </SideBar>
 
             <Map />
