@@ -21,6 +21,7 @@ function App() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [has_more, setHasMore] = useState(true);
+  const items_per_page = 10;
 
   //fetch forms and data
   useEffect(() => {
@@ -43,41 +44,40 @@ function App() {
         has_more,
         setHasMore,
         page,
+        items_per_page,
       }}
     >
       <div className="App">
-        <div>
-          <DataDisplay
-            renderSideBar={(selected_data, items) => (
-              <SideBar
-                items={items}
-                selected_data={selected_data}
-                itemsRender={(item, index, selected) => (
-                  <SideBarItem
-                    key={item.properties.name}
-                    index={index}
-                    render={() =>
-                      selected ? (
-                        <div className="sidebar-item sidebar-item-selected">
-                          This is {item?.properties.name}. (selected)
-                        </div>
-                      ) : (
-                        <div className="sidebar-item">
-                          This is {item.properties.name}.
-                        </div>
-                      )
-                    }
-                  />
-                )}
-              >
-                This is SideBar
-              </SideBar>
-            )}
-          >
-            <Map />
-          </DataDisplay>
-          <Filters />
-        </div>
+        <DataDisplay
+          renderSideBar={(selected_data, items) => (
+            <SideBar
+              items={items}
+              selected_data={selected_data}
+              itemsRender={(item, index, selected) => (
+                <SideBarItem
+                  key={item.properties.name}
+                  index={index}
+                  render={() =>
+                    selected ? (
+                      <div className="sidebar-item sidebar-item-selected">
+                        This is {item?.properties.name}. (selected)
+                      </div>
+                    ) : (
+                      <div className="sidebar-item">
+                        This is {item.properties.name}.
+                      </div>
+                    )
+                  }
+                />
+              )}
+            >
+              This is SideBar
+            </SideBar>
+          )}
+        >
+          <Map />
+        </DataDisplay>
+        <Filters />
       </div>
     </AppContext.Provider>
   );

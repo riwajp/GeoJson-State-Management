@@ -5,20 +5,18 @@ import { filter } from "./utils";
 export const DataContext = createContext();
 
 const DataDisplay = ({ renderSideBar, children }) => {
+  //states
   const [filtered_data, setFilteredData] = useState([]);
-
+  const [selected_data, setSelectedData] = useState();
   const {
     filter_schema,
     uncontrolled_filters,
     controlled_filters,
     page,
-    setPage,
-    has_more,
     setHasMore,
-
     data,
+    items_per_page,
   } = useContext(AppContext);
-  const [selected_data, setSelectedData] = useState();
 
   //set filtered data
   useEffect(() => {
@@ -63,8 +61,6 @@ const DataDisplay = ({ renderSideBar, children }) => {
       return [];
     }
   };
-
-  const items_per_page = 10;
 
   return (
     <DataContext.Provider
