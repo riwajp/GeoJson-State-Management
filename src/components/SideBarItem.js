@@ -11,7 +11,7 @@ const SideBarItem = ({ index, render }) => {
       ref={index === filtered_data.length - 1 ? last_element_ref : null}
       onClick={() => setSelectedData(filtered_data[index].properties)}
     >
-      {render(selected_data === filtered_data[index].properties)}
+      {render()}
     </div>
   );
 };
