@@ -15,13 +15,12 @@ const DataDisplay = ({ sidebarRender }) => {
     filter_schema,
     controlled_filters,
     uncontrolled_filters,
+    items_per_page,
   } = useContext(AppContext);
 
   const [selected_data, setSelectedData] = useState();
 
   const [filtered_data, setFilteredData] = useState([]);
-
-  const items_per_page = 10;
 
   //set filtered data
   useEffect(() => {

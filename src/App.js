@@ -29,6 +29,8 @@ function App() {
     setData(geojson_data.features);
   }, []);
 
+  const items_per_page = 10;
+
   return (
     <AppContext.Provider
       value={{
@@ -43,6 +45,7 @@ function App() {
         setPage,
         has_more,
         setHasMore,
+        items_per_page,
       }}
     >
       <div className="App">
