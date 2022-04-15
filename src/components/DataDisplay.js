@@ -1,17 +1,73 @@
-import { useContext, createContext, useState } from "react";
+import { useContext, createContext, useState, useEffect } from "react";
 import { AppContext } from "../App";
-import SideBar from "./SideBar";
-import SideBarItem from "./SideBarItem";
+import { filter } from "./utils";
+
 import Map from "./Map";
-import SideBarHeader from "./SideBarHeader";
 
 export const DataContext = createContext();
 
-const DataDisplay = () => {
-  const { filtered_data, setPage, has_more } = useContext(AppContext);
+const DataDisplay = ({ sidebarRender }) => {
+  //states
+  const {
+    data,
+    page,
+    setHasMore,
+    filter_schema,
+    controlled_filters,
+    uncontrolled_filters,
+  } = useContext(AppContext);
 
   const [selected_data, setSelectedData] = useState();
 
+  const [filtered_data, setFilteredData] = useState([]);
+
+  const items_per_page = 10;
+
+  //set filtered data
+  useEffect(() => {
+    if (data.length) {
+      const temp_filtered_data = filterData(data);
+      const new_filtered_data = temp_filtered_data.slice(
+        0,
+        page * items_per_page
+      );
+      if (
+        data.length &&
+        temp_filtered_data.length === new_filtered_data.length
+      ) {
+        setHasMore(false);
+      } else {
+        setHasMore(true);
+      }
+      setFilteredData(new_filtered_data);
+    }
+  }, [data, page, controlled_filters, uncontrolled_filters]);
+
+  //filter data function
+  const filterData = (data) => {
+    if (data !== null) {
+      let filtered_data = data;
+      for (const schema of filter_schema.filter(
+        (schema) => !schema.controlled
+      )) {
+        filtered_data = filter({
+          data: filtered_data,
+          schema: {
+            ...schema,
+            value:
+              controlled_filters[schema.value] ||
+              uncontrolled_filters[schema.value],
+          },
+        });
+      }
+
+      return filtered_data;
+    } else {
+      return [];
+    }
+  };
+
+  //return
   return (
     <DataContext.Provider
       value={{
@@ -20,19 +76,7 @@ const DataDisplay = () => {
         filtered_data,
       }}
     >
-      <SideBar
-        selected_data={selected_data}
-        setSelectedData={setSelectedData}
-        setPage={setPage}
-        has_more={has_more}
-        items={filtered_data}
-        itemsRender={(item, selected) => (
-          <SideBarItem item={item} selected={selected} />
-        )}
-      >
-        This is SideBar
-        <SideBarHeader />
-      </SideBar>
+      {sidebarRender(filtered_data, selected_data, setSelectedData)}
       <Map />
     </DataContext.Provider>
   );

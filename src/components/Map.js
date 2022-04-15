@@ -1,9 +1,7 @@
 import { useContext } from "react";
-import { AppContext } from "../App";
 import { DataContext } from "./DataDisplay";
 const Map = ({}) => {
-  const { selected_data } = useContext(DataContext);
-  const { filtered_data } = useContext(AppContext);
+  const { selected_data, filtered_data } = useContext(DataContext);
 
   return (
     <div className="map">
