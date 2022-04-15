@@ -1,14 +1,17 @@
-import { useRef, useCallback } from "react";
+import { useRef, useCallback, createContext } from "react";
 
-const SideBar = ({
-  items,
-  itemsRender,
-  children,
-  setPage,
-  has_more,
-  setSelectedData,
-  selected_data,
-}) => {
+export const SideBarContext = createContext();
+const SideBar = (props) => {
+  const {
+    items,
+    itemsRender,
+    children,
+    setPage,
+    has_more,
+    setSelectedData,
+    selected_data,
+  } = props;
+
   //refs
   const observer = useRef();
   const last_element_ref = useCallback(
@@ -28,7 +31,7 @@ const SideBar = ({
 
   //return
   return (
-    <div>
+    <SideBarContext.Provider value={props}>
       <div className="sidebar">
         <div>{children}</div>
         <div>
@@ -44,7 +47,7 @@ const SideBar = ({
           ))}
         </div>
       </div>
-    </div>
+    </SideBarContext.Provider>
   );
 };
 

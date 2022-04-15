@@ -3,6 +3,7 @@ import { AppContext } from "../App";
 import SideBar from "./SideBar";
 import SideBarItem from "./SideBarItem";
 import Map from "./Map";
+import SideBarHeader from "./SideBarHeader";
 
 export const DataContext = createContext();
 
@@ -19,7 +20,6 @@ const DataDisplay = () => {
         filtered_data,
       }}
     >
-      {" "}
       <SideBar
         selected_data={selected_data}
         setSelectedData={setSelectedData}
@@ -27,20 +27,11 @@ const DataDisplay = () => {
         has_more={has_more}
         items={filtered_data}
         itemsRender={(item, selected) => (
-          <div>
-            {selected ? (
-              <div className="sidebar-item sidebar-item-selected">
-                This is {item?.properties.name}. (selected)
-              </div>
-            ) : (
-              <div className="sidebar-item">
-                This is {item.properties.name}.
-              </div>
-            )}
-          </div>
+          <SideBarItem item={item} selected={selected} />
         )}
       >
         This is SideBar
+        <SideBarHeader />
       </SideBar>
       <Map />
     </DataContext.Provider>
