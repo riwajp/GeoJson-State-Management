@@ -5,12 +5,8 @@ import { useContext } from "react";
 import { AppContext } from "../App";
 
 const Filter = ({}) => {
-  const {
-    form_schema,
-    setUncontrolledFilters,
-    setControlledFilters,
-    controlled_filters,
-  } = useContext(AppContext);
+  const { form_schema, setFilters, controlled_filters } =
+    useContext(AppContext);
 
   const default_values = {};
   for (const schema of form_schema) {
@@ -34,7 +30,9 @@ const Filter = ({}) => {
               <FilterInput
                 {...field}
                 {...schema}
-                setControlledFilters={setControlledFilters}
+                setControlledFilters={(values) =>
+                  setFilters((i) => ({ ...i, ...values }))
+                }
                 controlled_filters={controlled_filters}
               />
             )}
@@ -43,14 +41,18 @@ const Filter = ({}) => {
           <FilterInput
             key={schema.name}
             {...schema}
-            setControlledFilters={setControlledFilters}
+            setControlledFilters={(values) =>
+              setFilters((i) => ({ ...i, controlled: values }))
+            }
             controlled_filters={controlled_filters}
           />
         )
       )}
 
       <button
-        onClick={handleSubmit((values) => setUncontrolledFilters(values))}
+        onClick={handleSubmit((values) =>
+          setFilters((i) => ({ ...i, uncontrolled: values }))
+        )}
       >
         Filter
       </button>

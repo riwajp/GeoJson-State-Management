@@ -14,6 +14,7 @@ const FilterInput = forwardRef(
     },
     ref
   ) => {
+    console.log("input");
     let controlled_props = {};
     if (controlled) {
       controlled_props = {

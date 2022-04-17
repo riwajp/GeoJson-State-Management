@@ -14,32 +14,37 @@ export const AppContext = createContext();
 
 function App() {
   //states
-  const [form_schema, setFormSchema] = useState([]);
-  const [filter_schema, setFilterSchema] = useState([]);
-  const [uncontrolled_filters, setUncontrolledFilters] = useState({});
-  const [controlled_filters, setControlledFilters] = useState({});
-  const [data, setData] = useState([]);
+
+  const [fetched_states, setFetchedStates] = useState({
+    data: [],
+    form_schema: [],
+    filter_schema: [],
+  });
+
+  const [filters, setFilters] = useState({ controlled: [], uncontrolled: [] });
+
   const [page, setPage] = useState(1);
   const [has_more, setHasMore] = useState(true);
   const items_per_page = 10;
 
   //fetch forms and data
   useEffect(() => {
-    setFormSchema(form_schema_data);
-    setFilterSchema(filter_schema_data);
-    setData(geojson_data.features);
+    setFetchedStates({
+      data: geojson_data.features,
+      form_schema: form_schema_data,
+      filter_schema: filter_schema_data,
+    });
   }, []);
 
   return (
     <AppContext.Provider
       value={{
-        filter_schema,
-        uncontrolled_filters,
-        controlled_filters,
-        setControlledFilters,
-        setUncontrolledFilters,
-        form_schema,
-        data,
+        filter_schema: fetched_states.filter_schema,
+        uncontrolled_filters: filters.uncontrolled,
+        controlled_filters: filters.controlled,
+        setFilters,
+        form_schema: fetched_states.form_schema,
+        data: fetched_states.data,
         setPage,
         has_more,
         setHasMore,
@@ -51,12 +56,16 @@ function App() {
         <DataDisplay
           renderSideBar={(selected_data, items) => (
             <SideBar
+              setPage={setPage}
+              has_more={has_more}
               items={items}
               selected_data={selected_data}
-              itemsRender={(item, index, selected) => (
+              itemsRender={(item, index, last_element_ref, selected) => (
                 <SideBarItem
                   key={item.properties.name}
                   index={index}
+                  item={item}
+                  last_element_ref={last_element_ref}
                   render={() =>
                     selected ? (
                       <div className="sidebar-item sidebar-item-selected">
