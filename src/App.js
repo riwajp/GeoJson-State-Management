@@ -2,59 +2,39 @@ import "./App.css";
 
 import Filters from "./components/Filters";
 import DataDisplay from "./components/DataDisplay";
-import { useState, useEffect, createContext } from "react";
+import { useEffect } from "react";
 import form_schema_data from "./form_schema.json";
 import filter_schema_data from "./filter_schema.json";
 import geojson_data from "./data.json";
 import Map from "./components/Map";
 import SideBar from "./components/SideBar";
 import SideBarItem from "./components/SideBarItem";
-
-export const AppContext = createContext();
+import { useRecoilState } from "recoil";
+import { _data_state, _schema_state } from "./components/states";
 
 function App() {
   //states
+  const [, setData] = useRecoilState(_data_state);
+  const [schema, setSchema] = useRecoilState(_schema_state);
 
-  const [fetched_states, setFetchedStates] = useState({
-    data: [],
-    form_schema: [],
-    filter_schema: [],
-  });
-
-  const [filters, setFilters] = useState({ controlled: [], uncontrolled: [] });
-
-  const [page, setPage] = useState(1);
-  const [has_more, setHasMore] = useState(true);
   const items_per_page = 10;
 
   //fetch forms and data
   useEffect(() => {
-    setFetchedStates({
-      data: geojson_data.features,
+    setData(geojson_data.features);
+    setSchema({
       form_schema: form_schema_data,
       filter_schema: filter_schema_data,
     });
   }, []);
 
+  console.log("App");
   return (
-    <AppContext.Provider
-      value={{
-        filter_schema: fetched_states.filter_schema,
-        uncontrolled_filters: filters.uncontrolled,
-        controlled_filters: filters.controlled,
-        setFilters,
-        form_schema: fetched_states.form_schema,
-        data: fetched_states.data,
-        setPage,
-        has_more,
-        setHasMore,
-        page,
-        items_per_page,
-      }}
-    >
+    <div>
       <div className="App">
         <DataDisplay
-          renderSideBar={(selected_data, items) => (
+          items_per_page={items_per_page}
+          renderSideBar={(selected_data, items, has_more, setPage) => (
             <SideBar
               setPage={setPage}
               has_more={has_more}
@@ -86,9 +66,9 @@ function App() {
         >
           <Map />
         </DataDisplay>
-        <Filters />
+        <Filters form_schema={schema.form_schema} />
       </div>
-    </AppContext.Provider>
+    </div>
   );
 }
 

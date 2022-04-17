@@ -1,17 +1,20 @@
 import { useForm, Controller } from "react-hook-form";
-
+import { _filter_state } from "./states";
 import FilterInput from "./FilterInput";
-import { useContext } from "react";
-import { AppContext } from "../App";
+import Controlled from "./Controlled";
 
-const Filter = ({}) => {
-  const { form_schema, setFilters, controlled_filters } =
-    useContext(AppContext);
+import { useSetRecoilState } from "recoil";
 
+const Filters = ({ form_schema }) => {
+  const setFilters = useSetRecoilState(_filter_state);
+
+  //extract default values
   const default_values = {};
   for (const schema of form_schema) {
     default_values[schema.name] = schema.default;
   }
+
+  //react hook form
   const { control, handleSubmit } = useForm({
     defaultValues: default_values,
   });
@@ -26,25 +29,20 @@ const Filter = ({}) => {
             key={schema.name}
             name={schema.name}
             control={control}
-            render={({ field }) => (
+            render={({ field }) => <FilterInput {...field} {...schema} />}
+          />
+        ) : (
+          <Controlled
+            render={(controlled_filters) => (
               <FilterInput
-                {...field}
+                key={schema.name}
                 {...schema}
                 setControlledFilters={(values) =>
-                  setFilters((i) => ({ ...i, ...values }))
+                  setFilters((i) => ({ ...i, controlled: values }))
                 }
                 controlled_filters={controlled_filters}
               />
             )}
-          />
-        ) : (
-          <FilterInput
-            key={schema.name}
-            {...schema}
-            setControlledFilters={(values) =>
-              setFilters((i) => ({ ...i, controlled: values }))
-            }
-            controlled_filters={controlled_filters}
           />
         )
       )}
@@ -60,4 +58,4 @@ const Filter = ({}) => {
   );
 };
 
-export default Filter;
+export default Filters;
