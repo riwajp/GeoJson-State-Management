@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { filter } from "./utils";
 import { useRecoilState } from "recoil";
 import { _filter_state, _schema_state } from "./states";
-import { _data_state } from "./states";
+import { _data_state, _selected_data_state } from "./states";
 import useFilteredPaginatedData from "./useFilteredPaginatedData";
 
 export const DataContext = createContext();
@@ -15,7 +15,7 @@ const DataDisplay = ({ renderSideBar, items_per_page, children }) => {
   const [data] = useRecoilState(_data_state);
   const [{ filter_schema }] = useRecoilState(_schema_state);
 
-  const [selected_data, setSelectedData] = useState();
+  const [selected_data, setSelectedData] = useRecoilState(_selected_data_state);
 
   const {
     data: filtered_data,

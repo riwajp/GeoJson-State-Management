@@ -14,3 +14,8 @@ export const _filter_state = atom({
   key: "filter_states",
   default: { controlled: [], uncontrolled: [] },
 });
+
+export const _selected_data_state = atom({
+  key: "selected_data_state",
+  default: null,
+});
