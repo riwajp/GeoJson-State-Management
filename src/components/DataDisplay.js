@@ -21,8 +21,10 @@ const DataDisplay = ({ renderSideBar, items_per_page, children }) => {
     data: filtered_data,
     setPage,
     has_more,
+    all_data,
   } = useFilteredPaginatedData({
     data,
+
     controlled_filters,
     uncontrolled_filters,
     filter_schema,
@@ -36,6 +38,11 @@ const DataDisplay = ({ renderSideBar, items_per_page, children }) => {
         selected_data,
         setSelectedData,
         filtered_data,
+
+        map_data:
+          controlled_filters?.map_display_type == "page"
+            ? filtered_data
+            : all_data,
       }}
     >
       {renderSideBar(selected_data, filtered_data, has_more, setPage)}

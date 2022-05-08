@@ -10,6 +10,7 @@ const useFilteredPaginatedData = ({
 }) => {
   //states
   const [new_filtered_data, setNewFilteredData] = useState([]);
+  const [all_filtered_data, setAllFilteredData] = useState([]);
   const [has_more, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
 
@@ -32,6 +33,7 @@ const useFilteredPaginatedData = ({
           });
         }
 
+        setAllFilteredData(filtered_data);
         return filtered_data;
       } else {
         return [];
@@ -56,7 +58,14 @@ const useFilteredPaginatedData = ({
     }
   }, [data, page, controlled_filters, uncontrolled_filters]);
 
-  return { data: new_filtered_data, page, setPage, has_more, setHasMore };
+  return {
+    data: new_filtered_data,
+    all_data: all_filtered_data,
+    page,
+    setPage,
+    has_more,
+    setHasMore,
+  };
 };
 
 export default useFilteredPaginatedData;

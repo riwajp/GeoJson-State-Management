@@ -1,4 +1,6 @@
 [
+
+  {"name":"map_display_type","type":"select","placeholder":"Map Data Display Type","options":[{"label":"All","value":"all"},{"label":"Page","value":"page"}],"controlled":true},
     {
       "name": "search",
       "type": "text",

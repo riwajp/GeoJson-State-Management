@@ -3,9 +3,13 @@ import { DataContext } from "./DataDisplay";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import data from "../data.json";
+import { _filter_state } from "./states";
+import { useRecoilState } from "recoil";
 
 const Map = ({ mapbox_token }) => {
-  const { selected_data, filtered_data } = useContext(DataContext);
+  console.log("map");
+  const { selected_data, map_data } = useContext(DataContext);
+
   const mapContainer = useRef(null);
   var map = useRef(null);
   const [lng, setLng] = useState(-70.9);
@@ -28,7 +32,7 @@ const Map = ({ mapbox_token }) => {
       setLoaded(true);
       map.current.addSource("states", {
         type: "geojson",
-        data: filtered_data.length === 0 ? data : filtered_data,
+        data: { type: "FeatureCollection", features: [] },
       });
       map.current.addLayer({
         id: "stateslayer",
@@ -84,17 +88,24 @@ const Map = ({ mapbox_token }) => {
     });
   }, [selected_data]);
 
-  if (loaded && selected_data.id) {
-    map.current.removeFeatureState({ source: "states" });
-    map.current.setFeatureState(
-      { source: "states", id: selected_data.id },
-      { selected: true }
-    );
+  if (loaded) {
+    if (selected_data.id) {
+      map.current.removeFeatureState({ source: "states" });
+      map.current.setFeatureState(
+        { source: "states", id: selected_data.id },
+        { selected: true }
+      );
+    }
+
+    map.current
+      .getSource("states")
+      .setData({ type: "FeatureCollection", features: map_data });
   }
 
   return (
     <div className="map">
       <h3>Map</h3>
+
       <br />
       <br />
       <div className="map-container" ref={mapContainer}></div>
