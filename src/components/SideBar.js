@@ -31,12 +31,7 @@ const SideBar = ({
         <div>
           {" "}
           {items.map((item, index) =>
-            itemsRender(
-              item,
-              index,
-              last_element_ref,
-              item.properties === selected_data
-            )
+            itemsRender(item, index, last_element_ref, item === selected_data)
           )}
         </div>
       </div>

@@ -33,10 +33,11 @@ const Filters = ({ form_schema }) => {
           />
         ) : (
           <Controlled
+            key={schema.name}
             render={(controlled_filters) => (
               <FilterInput
-                key={schema.name}
                 {...schema}
+                key={schema.name}
                 setControlledFilters={(values) =>
                   setFilters((i) => ({ ...i, controlled: values }))
                 }

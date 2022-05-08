@@ -19,6 +19,9 @@ function App() {
 
   const items_per_page = 10;
 
+  const mapbox_token =
+    "pk.eyJ1Ijoicml3YWpwIiwiYSI6ImNreGhqdmNrcTJheXUyeHRoZGV4Mm9qZTAifQ.krIdQfzikO4kh6g3j6ClLg";
+
   //fetch forms and data
   useEffect(() => {
     setData(geojson_data.features);
@@ -42,7 +45,7 @@ function App() {
               selected_data={selected_data}
               itemsRender={(item, index, last_element_ref, selected) => (
                 <SideBarItem
-                  key={item.properties.name}
+                  key={item.id}
                   index={index}
                   item={item}
                   last_element_ref={last_element_ref}
@@ -64,7 +67,7 @@ function App() {
             </SideBar>
           )}
         >
-          <Map />
+          <Map mapbox_token={mapbox_token} />
         </DataDisplay>
         <Filters form_schema={schema.form_schema} />
       </div>

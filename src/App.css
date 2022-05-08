@@ -19,12 +19,12 @@ overflow-y:scroll;
 
 .map{
   border-bottom:1px solid black;
-height:300px;
+ width:100%;
 
 }
 
 .filters{
-  margin-top:20px;
+  margin-top:50px;
 }
 
 .sidebar-item{
@@ -46,8 +46,8 @@ height:300px;
 .map-container{
   display:flex;
   flex-wrap:wrap;
-  width:400px;
-  height:200px;
+  width:900px;
+  height:400px;
   border:1px solid blue;
 }
 .map-item{

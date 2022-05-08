@@ -6,7 +6,7 @@ const SideBarItem = ({ item, index, render, last_element_ref }) => {
   return (
     <div
       ref={index === filtered_data.length - 1 ? last_element_ref : null}
-      onClick={() => setSelectedData(item.properties)}
+      onClick={() => setSelectedData(item)}
     >
       {render()}
     </div>
