@@ -7,7 +7,6 @@ import { _filter_state } from "./states";
 import { useRecoilState } from "recoil";
 
 const Map = ({ mapbox_token }) => {
-  console.log("map");
   const { selected_data, map_data } = useContext(DataContext);
 
   const mapContainer = useRef(null);
