@@ -34,7 +34,7 @@ function App() {
   console.log("App");
   return (
     <div>
-      <div className="App">
+      <div className="App ">
         <DataDisplay
           items_per_page={items_per_page}
           renderSideBar={(selected_data, items, has_more, setPage) => (
@@ -51,11 +51,11 @@ function App() {
                   last_element_ref={last_element_ref}
                   render={() =>
                     selected ? (
-                      <div className="sidebar-item sidebar-item-selected">
+                      <div className="sidebar__item sidebar__item--selected">
                         This is {item?.properties.name}. (selected)
                       </div>
                     ) : (
-                      <div className="sidebar-item">
+                      <div className="sidebar__item">
                         This is {item.properties.name}.
                       </div>
                     )
@@ -67,9 +67,21 @@ function App() {
             </SideBar>
           )}
         >
-          <Map mapbox_token={mapbox_token} />
+          <Map mapbox_token={mapbox_token} className="flex__item--5" />
         </DataDisplay>
         <Filters form_schema={schema.form_schema} />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   );

@@ -7,14 +7,18 @@ import useFilteredPaginatedData from "./useFilteredPaginatedData";
 
 export const DataContext = createContext();
 
-const DataDisplay = ({ renderSideBar, items_per_page, children }) => {
+const DataDisplay = ({
+  className,
+  renderSideBar,
+  items_per_page,
+  children,
+}) => {
   //states
   const [
     { controlled: controlled_filters, uncontrolled: uncontrolled_filters },
   ] = useRecoilState(_filter_state);
   const [data] = useRecoilState(_data_state);
   const [{ filter_schema }] = useRecoilState(_schema_state);
-
   const [selected_data, setSelectedData] = useRecoilState(_selected_data_state);
 
   const {
@@ -45,8 +49,10 @@ const DataDisplay = ({ renderSideBar, items_per_page, children }) => {
             : all_data,
       }}
     >
-      {renderSideBar(selected_data, filtered_data, has_more, setPage)}
-      {children}
+      <div className={className}>
+        {children}
+        {renderSideBar(selected_data, filtered_data, has_more, setPage)}
+      </div>
     </DataContext.Provider>
   );
 };

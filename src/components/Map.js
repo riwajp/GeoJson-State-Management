@@ -6,7 +6,7 @@ import data from "../data.json";
 import { _filter_state } from "./states";
 import { useRecoilState } from "recoil";
 
-const Map = ({ mapbox_token }) => {
+const Map = ({ mapbox_token, className }) => {
   const { selected_data, map_data } = useContext(DataContext);
 
   const mapContainer = useRef(null);
@@ -102,12 +102,12 @@ const Map = ({ mapbox_token }) => {
   }
 
   return (
-    <div className="map">
+    <div>
       <h3>Map</h3>
 
       <br />
       <br />
-      <div className="map-container" ref={mapContainer}></div>
+      <div className="map" ref={mapContainer}></div>
     </div>
   );
 };
